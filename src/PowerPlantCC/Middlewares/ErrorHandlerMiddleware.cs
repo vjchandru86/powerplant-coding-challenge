@@ -1,5 +1,4 @@
 ﻿using PowerPlantCC.Models.Response;
-using System.Net;
 using System.Text.Json;
 
 namespace PowerPlantCC.Middlewares
