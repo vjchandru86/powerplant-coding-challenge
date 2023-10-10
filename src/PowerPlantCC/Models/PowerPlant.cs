@@ -5,9 +5,9 @@ namespace PowerPlantCC.Models
     public class PowerPlant
     {
         [JsonPropertyName("name")]
-        public string Name { get; set; }
+        public string Name { get; set; } = null!;
         [JsonPropertyName("type")]
-        public string Type { get; set; }
+        public string Type { get; set; } = null!;
         [JsonPropertyName("efficiency")]
         public double Efficiency { get; set; }
         [JsonPropertyName("pmin")]
