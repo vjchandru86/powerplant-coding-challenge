@@ -22,16 +22,10 @@ namespace PowerPlantCC.Models
         [JsonIgnore]
         public double CostPmin { get; protected set; } = 0;
 
-        public virtual void SetCostPerMW(Dictionary<string, double> fuels)
-        {
-
-        }
-
         public virtual ProductionPlanResponse GeneratePP(double loadRequired, PowerPlant[]? powerplants, ProductionPlanResponse[]? productionPlanResponse, int? currentIndex)
         {
             throw new NotImplementedException();
         }
-
         protected void SetCostPminPmax()
         {
             CostPmin = Pmin * CostPerMW;

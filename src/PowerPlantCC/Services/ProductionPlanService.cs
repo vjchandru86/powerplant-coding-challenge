@@ -1,6 +1,4 @@
-﻿using PowerPlantCC.Constants;
-using PowerPlantCC.Models;
-using PowerPlantCC.Models.Request;
+﻿using PowerPlantCC.Models;
 using PowerPlantCC.Models.Response;
 
 namespace PowerPlantCC.Services
@@ -23,7 +21,7 @@ namespace PowerPlantCC.Services
         public ProductionPlanResponse[] CalculateProductionPlan(double loadRequired, PowerPlant[] powerplants, Dictionary<string, double> fuels)
         {
             var prodPlanResponse = new ProductionPlanResponse[powerplants.Length];
-            var orderedPlants = GetPlantsByMeritOrder(powerplants, fuels);
+            var orderedPlants = powerplants.OrderBy(x => x.CostPerMW);
             int i = 0;
             foreach (var plant in orderedPlants)
             {
@@ -45,15 +43,6 @@ namespace PowerPlantCC.Services
                 i++;
             }
             return prodPlanResponse;
-        }
-
-        private IOrderedEnumerable<PowerPlant> GetPlantsByMeritOrder(PowerPlant[] powerplants, Dictionary<string, double> fuels)
-        {
-            foreach (var powerplant in powerplants)
-            {
-                powerplant.SetCostPerMW(fuels);
-            }
-            return powerplants.OrderBy(x => x.CostPerMW);
         }
     }
 }

@@ -17,10 +17,10 @@ namespace PowerPlantCC
             switch (powerplant.Type)
             {
                 case PowerPlantTypeConstant.Turbojet:
-                    actualPowerPlant = new TurbinePlant(powerplant) ;
+                    actualPowerPlant = new TurbinePlant(powerplant, fuels) ;
                     break;
                 case PowerPlantTypeConstant.GasFired:
-                    actualPowerPlant = new GasPlant(powerplant);
+                    actualPowerPlant = new GasPlant(powerplant, fuels);
                     break;
                 case PowerPlantTypeConstant.WindTurbine:
                     actualPowerPlant = new WindPlant(powerplant, fuels);

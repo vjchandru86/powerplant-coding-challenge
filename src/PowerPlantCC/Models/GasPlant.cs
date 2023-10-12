@@ -1,23 +1,18 @@
 ﻿using PowerPlantCC.Constants;
-using PowerPlantCC.Models.Request;
 using PowerPlantCC.Models.Response;
 
 namespace PowerPlantCC.Models
 {
     internal class GasPlant : PowerPlant
     {
-        public GasPlant(PowerPlant powerplant) 
+        public GasPlant(PowerPlant powerplant, Dictionary<string, double> fuels) 
         {
             Pmax = powerplant.Pmax;
             Pmin = powerplant.Pmin;
             Name = powerplant.Name;
             Type = powerplant.Type;
             Efficiency = powerplant.Efficiency;
-        }
-
-        public override void SetCostPerMW(Dictionary<string, double> fuels)
-        {
-            CostPerMW = (double)((fuels[FuelConstant.Gas] + (0.3 * fuels[FuelConstant.Co2]) / Efficiency)); 
+            CostPerMW = (double)((fuels[FuelConstant.Gas] + (0.3 * fuels[FuelConstant.Co2]) / Efficiency));
             base.SetCostPminPmax();
         }
 
