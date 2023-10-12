@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using PowerPlantCC.Models.Response;
+using System.Text.Json.Serialization;
 
 namespace PowerPlantCC.Models
 {
@@ -15,20 +16,26 @@ namespace PowerPlantCC.Models
         [JsonPropertyName("pmax")]
         public double Pmax { get; set; }
         [JsonIgnore]
-        public double CostPerMW { get; private set; } = 0;
+        public double CostPerMW { get; protected set; } = 0;
         [JsonIgnore]
-        public double CostPmax { get; private set; } = 0;
+        public double CostPmax { get; protected set; } = 0;
         [JsonIgnore]
-        public double CostPmin { get; private set; } = 0;
+        public double CostPmin { get; protected set; } = 0;
 
-        public void SetCost(double? price)
+        public virtual void SetCostPerMW(Dictionary<string, double> fuels)
         {
-            if(price != null)
-            {
-                CostPerMW = (double)(price / Efficiency);
-                CostPmin = Pmin * CostPerMW;
-                CostPmax = Pmax * CostPerMW;
-            }
+
+        }
+
+        public virtual ProductionPlanResponse GeneratePP(double loadRequired, PowerPlant[]? powerplants, ProductionPlanResponse[]? productionPlanResponse, int? currentIndex)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected void SetCostPminPmax()
+        {
+            CostPmin = Pmin * CostPerMW;
+            CostPmax = Pmax * CostPerMW;
         }
     }
 }

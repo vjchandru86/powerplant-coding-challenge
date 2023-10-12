@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using PowerPlantCC.Models;
 using PowerPlantCC.Models.Request;
 using PowerPlantCC.Models.Response;
 using PowerPlantCC.Services;
@@ -14,9 +15,10 @@ namespace PowerPlantCC.Unit.Tests.Services
             ProductionPlanRequest productionPlanRequest = JsonConvert.DeserializeObject<ProductionPlanRequest>(ReadFromJsonExamplePayload("payload3.json"))!;            
             var ppService = new ProductionPlanService();
             ProductionPlanResponse[] productionPlanResponse = JsonConvert.DeserializeObject<ProductionPlanResponse[]>(ReadFromJsonExamplePayload("response3.json"))!;
+            var powerplants = GetPowerPlants(productionPlanRequest);
 
             // Act
-            var response = ppService.CalculateProductionPlan(productionPlanRequest);
+            var response = ppService.CalculateProductionPlan(productionPlanRequest.load, powerplants, productionPlanRequest.fuels);
 
             // Assert
             for(int i=0; i< response.Length; i++)
@@ -35,9 +37,10 @@ namespace PowerPlantCC.Unit.Tests.Services
             ProductionPlanRequest productionPlanRequest = JsonConvert.DeserializeObject<ProductionPlanRequest>(ReadFromJsonExamplePayload(fileName))!;
             var ppService = new ProductionPlanService();
             ProductionPlanResponse[] productionPlanResponse = JsonConvert.DeserializeObject<ProductionPlanResponse[]>(expectedResponse)!;
+            var powerplants = GetPowerPlants(productionPlanRequest);
 
             // Act
-            var response = ppService.CalculateProductionPlan(productionPlanRequest);
+            var response = ppService.CalculateProductionPlan(productionPlanRequest.load, powerplants, productionPlanRequest.fuels);
 
             // Assert
             for (int i = 0; i < response.Length; i++)
@@ -55,6 +58,18 @@ namespace PowerPlantCC.Unit.Tests.Services
                 json = r.ReadToEnd();
             }
             return json;
+        }
+
+        private PowerPlant[] GetPowerPlants(ProductionPlanRequest productionPlanRequest)
+        {
+            var powerplants = new PowerPlant[productionPlanRequest.powerplants.Length];
+            int i = 0;
+            foreach (var powerplant in productionPlanRequest.powerplants)
+            {
+                powerplants[i] = Factory.CreatePowerplant(powerplant, productionPlanRequest.fuels);
+                i++;
+            }
+            return powerplants;
         }
     }
 }

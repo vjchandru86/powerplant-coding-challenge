@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PowerPlantCC.Models;
 using PowerPlantCC.Models.Request;
 using PowerPlantCC.Models.Response;
 using PowerPlantCC.Services;
@@ -19,7 +20,14 @@ namespace PowerPlantCC.Routes
 
         static IResult GetProductionPlan(ProductionPlanRequest productionPlanRequest, [FromServices] IProductionPlanService productionPlanService)
         {
-            return Results.Ok(productionPlanService.CalculateProductionPlan(productionPlanRequest));
+            var powerplants = new PowerPlant[productionPlanRequest.powerplants.Length];
+            int i = 0;
+            foreach(var powerplant in productionPlanRequest.powerplants)
+            {
+                powerplants[i] = Factory.CreatePowerplant(powerplant, productionPlanRequest.fuels);
+                i++;
+            }
+            return Results.Ok(productionPlanService.CalculateProductionPlan(productionPlanRequest.load, powerplants, productionPlanRequest.fuels));
         }
     }
 }
