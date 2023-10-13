@@ -25,7 +25,7 @@ namespace PowerPlantCC.Models
             else
             {
                 var loadAdjusted = AdjustLoad(Pmin - loadRequired, powerplants, productionPlanResponse, currentIndex);
-                return new ProductionPlanResponse { Name = Name, P = Pmin };
+                return loadAdjusted ? new ProductionPlanResponse { Name = Name, P = Pmin } : throw new Exception("Unable to generate exact load");
             }
         }
         private bool AdjustLoad(double loadToReduce, PowerPlant[]? powerplants, ProductionPlanResponse[]? response, int? currentIndex)

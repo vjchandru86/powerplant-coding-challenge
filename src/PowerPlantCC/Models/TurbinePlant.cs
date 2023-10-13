@@ -15,10 +15,5 @@ namespace PowerPlantCC.Models
             CostPerMW = (double)(fuels[FuelConstant.Kerosine] / Efficiency);
             base.SetCostPminPmax();
         }
-
-        public override ProductionPlanResponse GeneratePP(double loadRequired, PowerPlant[]? powerplants, ProductionPlanResponse[]? productionPlanResponse, int? currentIndex)
-        {
-            return new ProductionPlanResponse { Name = Name, P = loadRequired };
-        }
     }
 }

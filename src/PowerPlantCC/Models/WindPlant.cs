@@ -13,9 +13,5 @@ namespace PowerPlantCC.Models
             Type = powerplant.Type;
             Efficiency = powerplant.Efficiency;
         }
-        public override ProductionPlanResponse GeneratePP(double loadRequired, PowerPlant[]? powerplants, ProductionPlanResponse[]? productionPlanResponse, int? currentIndex)
-        {
-            return new ProductionPlanResponse { Name = Name, P = loadRequired };
-        }
     }
 }
