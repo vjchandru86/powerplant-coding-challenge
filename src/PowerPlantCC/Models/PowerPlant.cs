@@ -24,7 +24,7 @@ namespace PowerPlantCC.Models
 
         public virtual ProductionPlanResponse GeneratePP(double loadRequired, PowerPlant[]? powerplants, ProductionPlanResponse[]? productionPlanResponse, int? currentIndex)
         {
-            return new ProductionPlanResponse { Name = Name, P = loadRequired };
+            return new ProductionPlanResponse(Name, loadRequired);
         }
         protected void SetCostPminPmax()
         {

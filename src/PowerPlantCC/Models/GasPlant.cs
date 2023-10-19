@@ -20,21 +20,22 @@ namespace PowerPlantCC.Models
         {
             if(loadRequired >= Pmin)
             {
-               return  new ProductionPlanResponse { Name = Name, P = loadRequired };
+               return  new ProductionPlanResponse(Name, loadRequired);
             }
             else
             {
                 var loadAdjusted = AdjustLoad(Pmin - loadRequired, powerplants, productionPlanResponse, currentIndex);
-                return loadAdjusted ? new ProductionPlanResponse { Name = Name, P = Pmin } : throw new Exception("Unable to generate exact load");
+                return loadAdjusted ? new ProductionPlanResponse(Name, Pmin) : throw new Exception("Unable to generate exact load");
             }
         }
+
         private bool AdjustLoad(double loadToReduce, PowerPlant[]? powerplants, ProductionPlanResponse[]? response, int? currentIndex)
         {
             currentIndex -= 1;
             var powerplant = powerplants!.First(x => x.Name == response![currentIndex ?? 0].Name);
             if (powerplant.Pmax - loadToReduce >= powerplant.Pmin)
             {
-                response![currentIndex ?? 0].P -= loadToReduce;
+                response![currentIndex ?? 0].P -= Convert.ToDecimal(loadToReduce);
                 return true;
             }
             else

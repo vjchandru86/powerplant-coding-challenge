@@ -1,4 +1,6 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Globalization;
+using System.Runtime.CompilerServices;
+using System.Text.Json.Serialization;
 
 namespace PowerPlantCC.Models.Response
 {
@@ -8,6 +10,12 @@ namespace PowerPlantCC.Models.Response
         public string Name { get; set; } = null!;
 
         [JsonPropertyName("p")]
-        public double P { get; set; }
+        public decimal P { get; set; }
+
+        public ProductionPlanResponse(string name, double p)
+        {
+            Name = name;
+            P = Convert.ToDecimal(string.Format("{0:#.0}", p));
+        }
     }
 }

@@ -26,7 +26,7 @@ namespace PowerPlantCC.Services
             foreach (var plant in orderedPlants)
             {
                 if (loadRequired <= 0)
-                    prodPlanResponse[i] = new ProductionPlanResponse { Name = plant.Name, P = 0 };
+                    prodPlanResponse[i] = new ProductionPlanResponse(plant.Name, 0.0);
                 else
                 {
                     if (loadRequired < plant.Pmax)
