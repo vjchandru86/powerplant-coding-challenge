@@ -12,7 +12,9 @@ namespace PowerPlantCC.Models
             Name = powerplant.Name;
             Type = powerplant.Type;
             Efficiency = powerplant.Efficiency;
-            CostPerMW = (double)((fuels[FuelConstant.Gas] + (0.3 * fuels[FuelConstant.Co2]) / Efficiency));
+            CostPerMW = (double)(fuels[FuelConstant.Gas] / Efficiency)
+                        // add with carbon emission cost
+                        + (0.3 * fuels[FuelConstant.Co2]);
             base.SetCostPminPmax();
         }
 
